@@ -7,8 +7,24 @@ using namespace std;
 class Solution {
  public:
   vector<vector<int>> generate(int numRows) {
-    // FIXME
-    return {};
+    vector<vector<int>> rows;
+    if (0 < numRows) {
+      rows.resize(numRows);
+      for (int i = 0; i < numRows; ++i) {
+        auto &next_row = rows[i];
+        int length = i + 1;
+        next_row.resize(length);
+        next_row.front() = rows[i].back() = 1;
+        if (0 < i) {
+          auto &prev_row = rows[i - 1];
+          for (int k = 1; k < length - 1; ++k) {
+            next_row[k] = prev_row[k - 1] + prev_row[k];
+          }
+        }
+      }
+    }
+
+    return rows;
   }
 };
 
